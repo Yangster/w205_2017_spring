@@ -8,14 +8,14 @@
 # save my current directory
 MY_CWD=$(pwd)
 
-# create staging directories
+# create staging directories -Don't bother with HDFS for now
 
 #Don't think I need these commands
 #su - w205
 #/data/start_metastore.sh # need this if start new instance?
 
 mkdir ~/staging
-mkdir ~/staging
+
 
 # change to staging directory
 cd ~/staging
@@ -38,20 +38,7 @@ tail -n +2 "Readmissions and Deaths - National.csv">readmissions_nat.csv
 tail -n +2 "Measure Dates.csv">measures.csv
 tail -n +2 "hvbp_hcahps_11_10_2016.csv">survey_responses.csv
 
-#Create folder in hdfs
-hdfs dfs -mkdir /user/w205/hospital_compare_t
 
-#put files in Hdfs directory
-hdfs dfs -put hospitals.csv /user/w205/hospital_compare_t
-hdfs dfs -put effective_care.csv /user/w205/hospital_compare_t
-hdfs dfs -put effective_care_st.csv /user/w205/hospital_compare_t
-hdfs dfs -put effective_care_nat.csv /user/w205/hospital_compare_t
-hdfs dfs -put readmissions.csv /user/w205/hospital_compare_t
-hdfs dfs -put readmissions_st.csv /user/w205/hospital_compare_t
-hdfs dfs -put readmissions_nat.csv /user/w205/hospital_compare_t
-hdfs dfs -put measures.csv /user/w205/hospital_compare_t
-hdfs dfs -put survey_responses.csv /user/w205/hospital_compare_t
-#change directory to original
 
 cd $MY_CWD
 

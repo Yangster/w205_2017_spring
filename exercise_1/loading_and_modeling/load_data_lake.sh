@@ -15,10 +15,10 @@ MY_CWD=$(pwd)
 #/data/start_metastore.sh # need this if start new instance?
 
 mkdir ~/staging
-mkdir ~staging/exercise_1
+
 
 # change to staging directory
-cd ~/staging/exercise_1
+cd ~/staging
 
 # get file from data.medicare.gov
 MY_URL="https://data.medicare.gov/views/bg9k-emty/files/6c902f45-e28b-42f5-9f96-ae9d1e583472?content_type=application%2Fzip%3B%20charset%3Dbinary&filename=Hospital_Revised_Flatfiles.zip"
@@ -51,7 +51,7 @@ hdfs dfs -put readmissions_st.csv /user/w205/hospital_compare
 hdfs dfs -put readmissions_nat.csv /user/w205/hospital_compare
 hdfs dfs -put measures.csv /user/w205/hospital_compare
 hdfs dfs -put survey_responses.csv /user/w205/hospital_compare
-3change directory to original
+#change directory to original
 
 cd $MY_CWD
 
