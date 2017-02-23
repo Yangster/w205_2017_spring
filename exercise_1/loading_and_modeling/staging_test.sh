@@ -1,28 +1,12 @@
 #!/bin/bash
-
-# mount -t ext4 dev/dvdf /data
-# /root/start-hadoop.sh
-# /data/start_postgres.sh
-# do I also need to get hdfs and postgres started in this shell script?
-
-# save my current directory
 MY_CWD=$(pwd)
-
-# create staging directories -Don't bother with HDFS for now
-
-#Don't think I need these commands
-#su - w205
-#/data/start_metastore.sh # need this if start new instance?
-
 mkdir ~/staging
-
-
 # change to staging directory
 cd ~/staging
 
 # get file from data.medicare.gov
 MY_URL="https://data.medicare.gov/views/bg9k-emty/files/6c902f45-e28b-42f5-9f96-ae9d1e583472?content_type=application%2Fzip%3B%20charset%3Dbinary&filename=Hospital_Revised_Flatfiles.zip"
-wget "$MY_URL" -O medicare_data.zip
+wget64 "$MY_URL" -O medicare_data.zip
 
 # unzip the Medicare data
 unzip medicare_data.zip

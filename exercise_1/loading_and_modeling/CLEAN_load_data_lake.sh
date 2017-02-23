@@ -17,7 +17,8 @@ MY_CWD=$(pwd)
 
 #empty and remove staging directories
 
-rm ~/staging/*
+rm ~/staging/exercise_1
+rmdir ~/staging/exercise_1
 rmdir ~/staging
 
 #remove files from HDFS
