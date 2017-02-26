@@ -39,19 +39,36 @@ tail -n +2 "Readmissions and Deaths - National.csv">readmissions_nat.csv
 tail -n +2 "Measure Dates.csv">measures.csv
 tail -n +2 "hvbp_hcahps_11_10_2016.csv">survey_responses.csv
 
-#Create folder in hdfs
+#Create main HDFS Directory
 hdfs dfs -mkdir /user/w205/hospital_compare
 
-#put files in Hdfs directory
-hdfs dfs -put hospitals.csv /user/w205/hospital_compare
-hdfs dfs -put effective_care.csv /user/w205/hospital_compare
-hdfs dfs -put effective_care_st.csv /user/w205/hospital_compare
-hdfs dfs -put effective_care_nat.csv /user/w205/hospital_compare
-hdfs dfs -put readmissions.csv /user/w205/hospital_compare
-hdfs dfs -put readmissions_st.csv /user/w205/hospital_compare
-hdfs dfs -put readmissions_nat.csv /user/w205/hospital_compare
-hdfs dfs -put measures.csv /user/w205/hospital_compare
-hdfs dfs -put survey_responses.csv /user/w205/hospital_compare
+#Create hdfs director each file and put files in Hdfs directory
+hdfs dfs -mkdir /user/w205/hospital_compare/hospitals
+hdfs dfs -put hospitals.csv /user/w205/hospital_compare/hospitals
+
+hdfs dfs -mkdir /user/w205/hospital_compare/effective_care
+hdfs dfs -put effective_care.csv /user/w205/hospital_compare/effective_care
+
+hdfs dfs -mkdir /user/w205/hospital_compare/effective_care_st
+hdfs dfs -put effective_care_st.csv /user/w205/hospital_compare/effective_care_st
+
+hdfs dfs -mkdir /user/w205/hospital_compare/effective_care_nat
+hdfs dfs -put effective_care_nat.csv /user/w205/hospital_compare/effective_care_nat
+
+hdfs dfs -mkdir /user/w205/hospital_compare/readmissions
+hdfs dfs -put readmissions.csv /user/w205/hospital_compare/readmissions
+
+hdfs dfs -mkdir /user/w205/hospital_compare/readmissions_st
+hdfs dfs -put readmissions_st.csv /user/w205/hospital_compare/readmissions_st
+
+hdfs dfs -mkdir /user/w205/hospital_compare/readmissions_nat
+hdfs dfs -put readmissions_nat.csv /user/w205/hospital_compare/readmissions_nat
+
+hdfs dfs -mkdir /user/w205/hospital_compare/measures
+hdfs dfs -put measures.csv /user/w205/hospital_compare/measures
+
+hdfs dfs -mkdir /user/w205/hospital_compare/survey_responses
+hdfs dfs -put survey_responses.csv /user/w205/hospital_compare/survey_responses
 #change directory to original
 
 cd $MY_CWD
