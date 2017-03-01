@@ -153,7 +153,7 @@ STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/readmissions'
 ;
 
-Drop Table effective_care_st;
+Drop Table readmissions_st;
 
 CREATE EXTERNAL TABLE readmissions_st
 (
@@ -228,7 +228,7 @@ LOCATION '/user/w205/hospital_compare/measures'
 
 Drop Table survey_responses;
 
-CREATE EXTERNAL TABLE survey responses
+CREATE EXTERNAL TABLE survey_responses
 (
 	provider_number string,
 	hospital_name string,
