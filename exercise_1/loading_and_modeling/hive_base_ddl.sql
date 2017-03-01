@@ -164,9 +164,9 @@ CREATE EXTERNAL TABLE readmissions_st
 	num_hosp_same string,
 	num_hosp_better string,
 	num_hosp_too_few string,
-	footnote_string,
+	footnote string,
 	measure_start_date string,
-	measure_end_date string,
+	measure_end_date string
 	
 )
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
