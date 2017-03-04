@@ -37,7 +37,8 @@ tail -n +2 "Readmissions and Deaths - Hospital.csv">readmissions.csv
 tail -n +2 "Readmissions and Deaths - State.csv">readmissions_st.csv
 tail -n +2 "Readmissions and Deaths - National.csv">readmissions_nat.csv
 tail -n +2 "Measure Dates.csv">measures.csv
-tail -n +2 "hvbp_hcahps_11_10_2016.csv">survey_responses.csv
+tail -n +2 "HCAHPS - Hospital.csv">survey_responses.csv
+tail -n +2 "HCAHPS - National.csv">survey_national.csv
 
 #Create main HDFS Directory
 hdfs dfs -mkdir /user/w205/hospital_compare
@@ -69,6 +70,9 @@ hdfs dfs -put measures.csv /user/w205/hospital_compare/measures
 
 hdfs dfs -mkdir /user/w205/hospital_compare/survey_responses
 hdfs dfs -put survey_responses.csv /user/w205/hospital_compare/survey_responses
+
+hdfs dfs -mkdir /user/w205/hospital_compare/survey_responses_nat
+hdfs dfs -put survey_national.csv /user/w205/hospital_compare/survey_national
 #change directory to original
 
 cd $MY_CWD

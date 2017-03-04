@@ -237,80 +237,20 @@ CREATE EXTERNAL TABLE survey_responses
 	state string,
 	zip string,
 	county string,
-	communications_with_nurses_floor string,
-	communications_with_nurses_achievement_threshold string,
-	communications_with_nurses_benchmark string,
-	communications_with_nurses_baseline_rate string,
-	communications_with_nurses_performance_rate string,
-	communications_with_nurses_achievement_points string,
-	communications_with_nurses_improvement_points string,
-	communications_with_nurses_dimension_score string,
-	
-	communications_with_doctors_floor string,
-	communications_with_doctors_achievement_threshold string,
-	communications_with_doctors_benchmark string,
-	communications_with_doctors_baseline_rate string,
-	communications_with_doctors_performance_rate string,
-	communications_with_doctors_achievement_points string,
-	communications_with_doctors_improvement_points string,
-	communications_with_doctors_dimension_score string,
-	
-	responsiveness_of_hospital_staff_floor string,
-	responsiveness_of_hospital_staff_achievement_threshold string,
-	responsiveness_of_hospital_staff_benchmark string,
-	responsiveness_of_hospital_staff_baseline_rate string,
-	responsiveness_of_hospital_staff_performance_rate string,
-	responsiveness_of_hospital_staff_achievement_points string,
-	responsiveness_of_hospital_staff_improvement_points string,
-	responsiveness_of_hospital_staff_dimension_score string,
-	
-	pain_management_floor string,
-	pain_management_achievement_threshold string,
-	pain_management_benchmark string,
-	pain_management_baseline_rate string,
-	pain_management_performance_rate string,
-	pain_management_achievement_points string,
-	pain_management_improvement_points string,
-	pain_management_dimension_score string,
-	
-	communication_about_medicines_floor string,
-	communication_about_medicines_achievement_threshold string,
-	communication_about_medicines_benchmark string,
-	communication_about_medicines_baseline_rate string,
-	communication_about_medicines_performance_rate string,
-	communication_about_medicines_achievement_points string,
-	communication_about_medicines_improvement_points string,
-	communication_about_medicines_dimension_score string,
-	
-	cleanliness_and_quietness_floor string,
-	cleanliness_and_quietness_achievement_threshold string,
-	cleanliness_and_quietness_benchmark string,
-	cleanliness_and_quietness_baseline_rate string,
-	cleanliness_and_quietness_performance_rate string,
-	cleanliness_and_quietness_achievement_points string,
-	cleanliness_and_quietness_improvement_points string,
-	cleanliness_and_quietness_dimension_score string,
-	
-	discharge_information_floor string,
-	discharge_information_achievement_threshold string,
-	discharge_information_benchmark string,
-	discharge_information_baseline_rate string,
-	discharge_information_performance_rate string,
-	discharge_information_achievement_points string,
-	discharge_information_improvement_points string,
-	discharge_information_dimension_score string,
-	
-	overall_rating_floor string,
-	overall_rating_achievement_threshold string,
-	overall_rating_benchmark string,
-	overall_rating_baseline_rate string,
-	overall_rating_performance_rate string,
-	overall_rating_achievement_points string,
-	overall_rating_improvement_points string,
-	overall_rating_dimension_score string,
-	
-	HCAHPS_base_score string,
-	HCAHPS_consistency_score string
+	phone string,
+	HCAHPS_measure_id string,
+	HCAHPS_Question string,
+	HCAHPS_Answer_Description string,
+	Patient_survey_star_rating string,
+	Patient_survey_star_rating_ftnt string,	
+	HCAHPS_Answer_Percent string,
+	HCAHPS_Answer_Percent_ftnt string,
+	Number_Completed_Surveys string,
+	Number_Completed_Surveys_ftnt string,
+	Survey_Reponse_Rate_Percent string,
+	Survey_Reponse_Rate_Percent_ftnt string,
+	measure_start_date string,
+	measure_end_date string
 )
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
@@ -320,4 +260,26 @@ WITH SERDEPROPERTIES (
 )
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/survey_responses'
+;
+
+Drop Table survey_national;
+
+CREATE EXTERNAL TABLE survey_responses
+(
+	HCAHPS_measure_id string,
+	HCAHPS_Question string,
+	HCAHPS_Answer_Description string,
+	HCAHPS_Answer_Percent string,
+	footnote string,
+	measure_start_date string,
+	measure_end_date string
+)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+	"seperatorChar"=',',
+	"quoteChar"='"',
+	"escapeChar"='\\'
+)
+STORED AS TEXTFILE
+LOCATION '/user/w205/hospital_compare/survey_national'
 ;
