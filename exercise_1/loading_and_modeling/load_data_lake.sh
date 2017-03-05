@@ -71,7 +71,7 @@ hdfs dfs -put measures.csv /user/w205/hospital_compare/measures
 hdfs dfs -mkdir /user/w205/hospital_compare/survey_responses
 hdfs dfs -put survey_responses.csv /user/w205/hospital_compare/survey_responses
 
-hdfs dfs -mkdir /user/w205/hospital_compare/survey_responses_nat
+hdfs dfs -mkdir /user/w205/hospital_compare/survey_national
 hdfs dfs -put survey_national.csv /user/w205/hospital_compare/survey_national
 #change directory to original
 

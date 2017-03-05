@@ -1,6 +1,6 @@
-Drop Table hospitals;
+Drop Table hospitals_raw;
 
-CREATE EXTERNAL TABLE hospitals
+CREATE EXTERNAL TABLE hospitals_raw
 (
 	provider_id string,
 	hospital_name string,
@@ -41,9 +41,9 @@ STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/hospitals'
 ;
 
-Drop Table effective_care;
+Drop Table effective_care_raw;
 
-CREATE EXTERNAL TABLE effective_care
+CREATE EXTERNAL TABLE effective_care_raw
 (
 	provider_id string,
 	hospital_name string,
@@ -72,9 +72,9 @@ STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/effective_care'
 ;
 
-Drop Table effective_care_st;
+Drop Table effective_care_st_raw;
 
-CREATE EXTERNAL TABLE effective_care_st
+CREATE EXTERNAL TABLE effective_care_st_raw
 (
 	state string,
 	condition string,
@@ -96,9 +96,9 @@ STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/effective_care_st'
 ;
 
-Drop Table effective_care_nat;
+Drop Table effective_care_nat_raw;
 
-CREATE EXTERNAL TABLE effective_care_nat
+CREATE EXTERNAL TABLE effective_care_nat_raw
 (
 	measure_name string,
 	measure_id string,
@@ -120,9 +120,9 @@ STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/effective_care_nat'
 ;
 
-Drop Table readmissions;
+Drop Table readmissions_raw;
 
-CREATE EXTERNAL TABLE readmissions
+CREATE EXTERNAL TABLE readmissions_raw
 (
 	provider_id string,
 	hospital_name string,
@@ -153,9 +153,9 @@ STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/readmissions'
 ;
 
-Drop Table readmissions_st;
+Drop Table readmissions_st_raw;
 
-CREATE EXTERNAL TABLE readmissions_st
+CREATE EXTERNAL TABLE readmissions_st_raw
 (
 	state string,
 	measure_name string,
@@ -179,9 +179,9 @@ STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/readmissions_st'
 ;
 
-Drop Table readmissions_nat;
+Drop Table readmissions_nat_raw;
 
-CREATE EXTERNAL TABLE readmissions_nat
+CREATE EXTERNAL TABLE readmissions_nat_raw
 (
 	measure_name string,
 	measure_id string,
@@ -205,9 +205,9 @@ STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/readmissions_nat'
 ;
 
-Drop Table measures;
+Drop Table measures_raw;
 
-CREATE EXTERNAL TABLE measures
+CREATE EXTERNAL TABLE measures_raw
 (
 	measure_name string,
 	measure_id string,
@@ -226,9 +226,9 @@ STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/measures'
 ;
 
-Drop Table survey_responses;
+Drop Table survey_responses_raw;
 
-CREATE EXTERNAL TABLE survey_responses
+CREATE EXTERNAL TABLE survey_responses_raw
 (
 	provider_number string,
 	hospital_name string,
@@ -262,9 +262,9 @@ STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/survey_responses'
 ;
 
-Drop Table survey_national;
+Drop Table survey_national_raw;
 
-CREATE EXTERNAL TABLE survey_national
+CREATE EXTERNAL TABLE survey_national_raw
 (
 	HCAHPS_measure_id string,
 	HCAHPS_Question string,

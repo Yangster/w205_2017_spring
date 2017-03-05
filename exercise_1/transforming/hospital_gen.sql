@@ -1,5 +1,5 @@
-drop table hospitals_general;
-create table hospitals_general as
+drop table Hospitals;
+create table Hospitals as
 select
 	provider_id as hospital_id,
 	hospital_name,
@@ -8,25 +8,10 @@ select
 	hosp_owner as hospital_ownership
 	emergency_Services
 	cast(hospital_overall_rating as decimal(1,0)) rating
-from hospitals
+from hospitals_raw
 where hospital_overall_Rating not like 'Not%'
 ;
 
-
-drop table my_real_dates;
-create table my_real_dates as
-select
-cast(
-	concat (substr(measure_start_date, 7, 4),
-		'-',
-		substr(measure_start_date, 1, 2),
-		'-',
-		substr(measure_start_date, 4, 2)
-		)
-	as date) as my_date,
-	measyre_start_date
-from measures
-;
 	
 drop table measures;
 create table measures as
@@ -50,7 +35,7 @@ select
 		substr(measure_end_date, 4, 2)
 		)
 	as date) as measure_end_date
-from effective_care_nat
+from effective_care_nat_raw
 UNION ALL
 SELECT
 	measure_name,
@@ -71,6 +56,26 @@ SELECT
 		substr(measure_end_date, 4, 2)
 		)
 	as date) as measure_end_date
-from readmissions_nat
+from readmissions_nat_raw
 ;
+
+DROP TABLE Hospital_Measures;
+CREATE TABLE Hopsital_Measures as
+select
+	provider_id,
+	hospital_name,
+	measure_id,
+	measure_name,
+	score
+from effective_care_raw
+UNION all
+select
+	provider_id,
+	hospital_name,
+	measure_id,
+	measure_name,
+	score,
+	
+	
+	
 	
