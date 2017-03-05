@@ -1,1 +1,1 @@
-select * from hospitals limit 5;
+select * from hospitals_raw limit 5;
