@@ -1,80 +1,164 @@
-drop table Hospitals;
-create table Hospitals as
-select
-	provider_id as hospital_id,
+DROP TABLE Hospitals;
+CREATE TABLE Hospitals AS
+SELECT
+	provider_id,
 	hospital_name,
 	state,
-	hosp_type as hospital_type,
-	hosp_owner as hospital_ownership
-	emergency_Services
-	cast(hospital_overall_rating as decimal(1,0)) rating
-from hospitals_raw
-where hospital_overall_Rating not like 'Not%'
+	hosp_type AS hospital_type,
+	hosp_owner AS hospital_ownership,
+	emergency_Services,
+	CAST(hospital_overall_rating AS decimal(1,0)) rating
+FROM hospitals_raw
 ;
 
 	
-drop table measures;
-create table measures as
-select 
-	measure_name,
-	measure_id,
-	score as national_avg,
-	footnote,
-	concat (substr(measure_start_date, 7, 4),
-		'-',
-		substr(measure_start_date, 1, 2),
-		'-',
-		substr(measure_start_date, 4, 2)
-		)
-	as date) as measure_start_date,
-	--can cast it with the same name? think so
-	concat (substr(measure_end_date, 7, 4),
-		'-',
-		substr(measure_end_date, 1, 2),
-		'-',
-		substr(measure_end_date, 4, 2)
-		)
-	as date) as measure_end_date
-from effective_care_nat_raw
-UNION ALL
+DROP TABLE procedures;
+CREATE TABLE procedures AS
 SELECT
-	measure_name,
-	measure_id,
-	national_rate as national_avg
-	concat (substr(measure_start_date, 7, 4),
+	ef.measure_id AS measure_id,
+	ef.name AS name,
+	ef.condition AS condition,
+	en.category AS category,
+	CAST(en.score AS int) AS national_average,
+	CAST(
+	concat (substr(ef.measure_start_date, 7, 4),
 		'-',
-		substr(measure_start_date, 1, 2),
+		substr(ef.measure_start_date, 1, 2),
 		'-',
-		substr(measure_start_date, 4, 2)
+		substr(ef.measure_start_date, 4, 2)
 		)
-	as date) as measure_start_date,
-	--can cast it with the same name? think so
-	concat (substr(measure_end_date, 7, 4),
+	AS date) AS measure_start_date,
+	CAST(
+	concat (substr(ef.measure_end_date, 7, 4),
 		'-',
-		substr(measure_end_date, 1, 2),
+		substr(ef.measure_end_date, 1, 2),
 		'-',
-		substr(measure_end_date, 4, 2)
+		substr(ef.measure_end_date, 4, 2)
 		)
-	as date) as measure_end_date
-from readmissions_nat_raw
+	AS date) AS measure_end_date
+	
+	
+FROM (
+	SELECT
+		measure_id,
+		FIRST(measure_name) AS name,
+		FIRST(condition) AS condition,
+		FIRST (measure_start_date) AS measure_start_date,
+		FIRST (measure_end_date) AS measure_end_date
+	FROM effective_care_raw
+	GROUP BY measure_id
+	)
+AS ef LEFT JOIN 
+	effective_care_nat_raw AS en
+ON (ef.measure_id=en.measure_id)
 ;
 
-DROP TABLE Hospital_Measures;
-CREATE TABLE Hopsital_Measures as
-select
+
+DROP TABLE hospital_procedures;
+CREATE TABLE hospital_procedures AS
+SELECT
 	provider_id,
-	hospital_name,
 	measure_id,
-	measure_name,
-	score
-from effective_care_raw
-UNION all
-select
-	provider_id,
-	hospital_name,
+	score AS score_raw,
+	CAST(score AS int) AS score
+FROM effective_care_raw;
+
+
+DROP TABLE state_procedures;
+CREATE TABLE state_procedures AS
+SELECT	
+	state,
 	measure_id,
-	measure_name,
-	score,
+	AVG(score) AS average_score,
+	PERCENTILE(score, 0.50) AS median score	
+FROM(
+	SELECT
+		h.state as state
+		hp.provider_id as provider_id,
+		hp.measure_id as measure_id,
+		hp.score AS score
+	FROM hospital_procedures as hp
+		JOIN
+		hospitals as h
+		ON
+		(hp.provider_id=h.provider_id)
+	)
+WHERE score IS NOT null
+GROUP BY state, measure_id
+ORDER BY state desc
+;
+
+
+DROP TABLE hospital_survey_stars;
+CREATE TABLE hospital_survey_stars AS
+SELECT
+	provider_number AS provider_id,
+	HCAHPS_measure_id,
+	CAST(patient_survey_star_rating AS TINYINT) AS stars
+	Patient_survey_star_rating_ftnt
+FROM survey_reponses_raw
+WHERE hcahps_answer_description LIKE '%star rating%'
+
+DROP TABLE survey_stars;
+CREATE TABLE survey_stars AS
+SELECT
+	HCAHPS_measure_id,
+	FIRST(HCAHPS_question),
+	FIRST(HCAHPS_Answer_Description),
+	FIRST(CAST(
+	concat (substr(measure_start_date, 7, 4),
+		'-',
+		substr(measure_start_date, 1, 2),
+		'-',
+		substr(measure_start_date, 4, 2)
+		)
+
+	AS date) 
+	) AS measure_start_date,
+	FIRST(
+	CAST(
+	concat (substr(measure_end_date, 7, 4),
+		'-',
+		substr(measure_end_date, 1, 2),
+		'-',
+		substr(measure_end_date, 4, 2)
+		)
+	AS date) 
+	)AS measure_end_date
+FROM survey_responses_raw
+WHERE hcahps_answer_description LIKE '%star rating%'
+GROUP BY HCAHPS_measure_id
+	
+	
+DROP TABLE state_survey_stars;
+CREATE TABLE state_survey_stars AS
+SELECT
+	HCAHPS_measure_id,
+	FIRST(HCAHPS_question),
+	FIRST(HCAHPS_Answer_Description),
+	FIRST(CAST(
+	concat (substr(measure_start_date, 7, 4),
+		'-',
+		substr(measure_start_date, 1, 2),
+		'-',
+		substr(measure_start_date, 4, 2)
+		)
+
+	AS date) 
+	) AS measure_start_date,
+	FIRST(
+	CAST(
+	concat (substr(measure_end_date, 7, 4),
+		'-',
+		substr(measure_end_date, 1, 2),
+		'-',
+		substr(measure_end_date, 4, 2)
+		)
+	AS date) 
+	)AS measure_end_date
+FROM survey_responses_raw
+WHERE hcahps_answer_description LIKE '%star rating%'
+GROUP BY HCAHPS_measure_id
 	
 	
 	
