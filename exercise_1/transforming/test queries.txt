@@ -1,0 +1,137 @@
+select count(1) as count, Patient_survey_star_rating
+from survey_responses_raw
+where hcahps_answer_description like '%star rating%'
+group by Patient_survey_star_rating
+order by count desc
+
+CREATE TABLE test_int as
+SELECT provider_number, HCAHPS_measure_id, HCAHPS_Question, cast(Patient_survey_star_rating as int) stars
+FROM survey_responses_raw
+WHERE HCAHPS_Answer_Description like '%star%'
+;
+
+CREATE TABLE test_int as
+SELECT provider_number, HCAHPS_measure_id, HCAHPS_Question, Patient_survey_star_rating star_rating
+FROM survey_responses_raw
+WHERE HCAHPS_Answer_Description like '%star%'
+;
+
+select count(1), provider_number
+from test_int
+where star_rating not like 'Not%'
+group by provider_number
+
+create table test_join as
+select efc.provider_id, efc.hospital_name, efc.measure_id, efn.measure_name as nat_name, efc.measure_name as name, efc.score as score, efn.score as nat_avg
+from effective_care_raw as efc join effective_care_nat_raw as efn on (efc.measure_id=efn.measure_id)
+
+CREATE TABLE test_join2 AS
+SELECT 
+    efn.measure_id,
+    efn.measure_name AS description,
+    efc.measure_name AS name,
+    efn.score AS nat_avg
+FROM  effective_care_nat_raw AS efn 
+JOIN  
+    (SELECT 
+        measure_id, 
+        FIRST(measure_name) as measure_name 
+    FROM effective_care_raw 
+    GROUP BY measure_id) 
+AS efc ON (efc.measure_id=efn.measure_id)
+;
+
+
+SELECT measure_id, FIRST(measure_name) FROM effective_care_raw GROUP BY measure_id
+
+CREATE TABLE test_join2 AS
+SELECT efn.measure_id,efn.measure_name AS description,efc.measure_name AS name,efn.score AS nat_avg
+FROM  effective_care_nat_raw AS efn 
+JOIN  (SELECT measure_id, FIRST(measure_name) as measure_name FROM effective_care_raw GROUP BY measure_id) 
+AS efc ON (efc.measure_id=efn.measure_id)
+;
+
+CREATE TABLE non_num_eff_care AS
+SELECT * FROM effective_care_raw
+WHERE score LIKE '%High%' OR score LIKE '%Low%' OR score LIKE '%Medium%'
+;
+
+
+select count(1) as count, number_completed_surveys
+from survey_responses_raw
+where hcahps_answer_description like '%star rating%'
+group by number_completed_surveys
+order by count desc
+
+
+
+DROP TABLE procedures;
+CREATE TABLE procedures AS
+SELECT ef.measure_id as measure_id, ef.name as name, ef.condition as condition,
+  en.category AS category, cast(en.score as int) as national_average,
+  cast(concat (substr(ef.measure_start_date, 7, 4),'-',
+    substr(ef.measure_start_date, 1, 2),'-',
+    substr(ef.measure_start_date, 4, 2))
+  as date) as measure_start_date,
+  cast(
+  concat (substr(ef.measure_end_date, 7, 4), '-',
+    substr(ef.measure_end_date, 1, 2), '-',
+    substr(ef.measure_end_date, 4, 2))
+  as date) as measure_end_date
+FROM (SELECT measure_id, FIRST(measure_name) AS name,
+    FIRST(condition) AS condition, FIRST (measure_start_date) as measure_start_date,
+    FIRST (measure_end_date) as measure_end_date FROM effective_care_raw GROUP BY measure_id)
+AS ef LEFT JOIN effective_care_nat_raw as en
+ON (ef.measure_id=en.measure_id)
+;
+
+SELECT
+        measure_id,
+        FIRST(measure_name) AS name,
+        FIRST(condition) AS condition,
+        FIRST (measure_start_date) as measure_start_date,
+        FIRST (measure_end_date) as measure_end_date
+    FROM effective_care_raw
+    GROUP BY measure_id
+    
+    
+    
+
+DROP TABLE survey_stars;
+CREATE TABLE survey_stars AS
+SELECT
+    HCAHPS_measure_id,
+    FIRST(HCAHPS_question),
+    FIRST(HCAHPS_Answer_Description),
+    FIRST(CAST(
+    concat(substr(measure_start_date, 7, 4),
+        '-',
+        substr(measure_start_date, 1, 2),
+        '-',
+        substr(measure_start_date, 4, 2)
+        )
+    AS date)
+    ) AS measure_start_date,
+    FIRST(
+    CAST(
+    concat(substr(measure_end_date, 7, 4),
+        '-',
+        substr(measure_end_date, 1, 2),
+        '-',
+        substr(measure_end_date, 4, 2)
+        )
+
+    AS date) 
+    ) AS measure_end_date
+FROM survey_responses_raw
+WHERE hcahps_answer_description LIKE '%star rating%'
+GROUP BY HCAHPS_measure_id
+
+CREATE TABLE survey_stars AS
+SELECT
+    HCAHPS_measure_id,
+    FIRST(HCAHPS_question),
+    FIRST(HCAHPS_Answer_Description)
+FROM survey_responses_raw
+WHERE hcahps_answer_description LIKE '%star rating%'
+GROUP BY HCAHPS_measure_id
