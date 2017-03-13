@@ -31,8 +31,8 @@ tail -n +2 "Readmissions and Deaths - National.csv">~/staging/ex1/clean/readmiss
 mv "Readmissions and Deaths - National.csv" ~/staging/ex1/clean/"Readmissions and Deaths - National.csv"
 tail -n +2 "Measure Dates.csv">~/staging/ex1/clean/measures.csv
 mv "Measure Dates.csv" ~/staging/ex1/clean/"Measure Dates.csv"
-tail -n +2 "hvbp_hcahps_11_10_2016.csv">~/staging/ex1/clean/survey_responses.csv
-mv "hvbp_hcahps_11_10_2016.csv" ~/staging/ex1/clean/"hvbp_hcahps_11_10_2016.csv"
+tail -n +2 "HCAHPS_Hospital.csv">~/staging/ex1/clean/survey_responses.csv
+mv "HCAHPS_Hospital.csv" ~/staging/ex1/clean/"HCAHPS_Hospital.csv"
 
 cd ~/staging/ex1
 #rm -r ~/staging/ex1/dump/*
