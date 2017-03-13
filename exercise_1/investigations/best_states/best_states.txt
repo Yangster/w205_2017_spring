@@ -1,0 +1,13 @@
+State	Average Normalized Score
+SD  	0.45012025637455944                                                     
+WI		0.35784114431693065
+UT		0.3151967374929796
+KS		0.24720736223582845
+CO		0.23969045924472057
+WY		0.23231043854816213
+ME		0.23220922426379367
+NE		0.22916380962397812
+IA		0.19576064814554733
+OK		0.19502569222036692
+I aggregated data for states using the same methodology I used for hospitals. The same 
+caveats apply. The spread for states is much smaller, largely due to a larger sample size.

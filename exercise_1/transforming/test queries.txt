@@ -135,3 +135,22 @@ SELECT
 FROM survey_responses_raw
 WHERE hcahps_answer_description LIKE '%star rating%'
 GROUP BY HCAHPS_measure_id
+
+SELECT
+    HCAHPS_measure_id,
+    FIRST(measure_end_date)
+FROM survey_responses_raw
+WHERE hcahps_answer_description LIKE '%star rating%'
+GROUP BY HCAHPS_measure_id
+
+CREATE TABLE Hospitals AS
+SELECT
+    provider_id,
+    hospital_name,
+    state,
+    hosp_type AS hospital_type,
+    hosp_owner AS hospital_ownership,
+    emergency_Services,
+    CAST(hospital_overall_rating AS decimal(1,0)) rating
+FROM hospitals_raw
+;

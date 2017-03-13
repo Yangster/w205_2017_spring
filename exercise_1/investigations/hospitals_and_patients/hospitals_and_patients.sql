@@ -1,9 +1,10 @@
-DROP TABLE procedure_std;
-CREATE TABLE procedure_std AS
-SELECT measure_id, stddev_samp(score) as measure_std
-FROM hospital_procedures
-WHERE score IS NOT NULL
-GROUP BY measure_id;
+DROP TABLE avg_med_star_hosp;
+CREATE TABLE avg_med_star_hosp as
+SELECT provider_id, avg(stars) as avg_stars, percentile(stars,0.5) as med_stars
+FROM hospital_survey_stars
+WHERE stars IS NOT NULL
+GROUP BY provider_id
+;
 
 
 DROP TABLE normalized_hosp_scores;
@@ -33,19 +34,10 @@ GROUP BY provider_id
 ;
 
 
-DROP TABLE best_hosps;
-CREATE TABLE best_hosps AS
-SELECT
-    hid.provider_id,
-    h.hospital_name,
-    h.state,
-    h.hospital_type,
-    h.hospital_ownership,
-    hid.avg_score
-FROM
-best_hosp_ids as hid LEFT JOIN hospitals as h
-ON (hid.provider_id=h.provider_id)
+DROP TABLE correlation_stars_score
+CREATE TABLE correlation_stars_score AS
+SELECT corr(star.avg_stars,score.avg_score) as correlation_avg
+FROM avg_med_star_hosp as star
+JOIN best_hosp_ids as score
+ON (STAR.provider_id=score.provider_id)
 ;
-
-
-select * from best_hosps order by avg_score desc limit 10;

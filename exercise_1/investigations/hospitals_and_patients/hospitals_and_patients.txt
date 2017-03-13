@@ -1,0 +1,14 @@
+			mean stars v. score		med stars v. score		mean stars v hosp std	med stars v hosp std		
+Correlation 0.3250961308979467      0.3098543531271924      -0.21631479706019133    -0.20647302951819602
+
+I correlated the average and median star ratings each hospital received from patient 
+surveys against the mean normalized score and the standard deviation of the normalized scores
+for each hospital.
+
+Stars were the most effective summary of patient satisfaction as they are a general indicator
+of patient sentiment. More granular numbers run the risk of adding precision where none
+should exist
+
+I found a positive relation between results of patient surveys and score and negative
+between the surveys and variance of scores. This relationships are worth exploring further
+but not substitute for proper regression.
