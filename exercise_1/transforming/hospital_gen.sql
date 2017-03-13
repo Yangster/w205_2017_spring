@@ -83,7 +83,7 @@ FROM(
       ON
       (hp.provider_id=h.provider_id)
    )
-WHERE score IS NOT NULL
+WHERE hp.score IS NOT NULL
 GROUP BY state, measure_id
 ORDER BY state desc
 ;
