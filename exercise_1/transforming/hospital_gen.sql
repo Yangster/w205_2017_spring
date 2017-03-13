@@ -98,7 +98,7 @@ SELECT
 	HCAHPS_measure_id,
 	CAST(patient_survey_star_rating AS TINYINT) AS stars,
 	Patient_survey_star_rating_ftnt
-FROM survey_reponses_raw
+FROM survey_responses_raw
 WHERE hcahps_answer_description LIKE '%star rating%'
 ;
 
