@@ -100,6 +100,7 @@ SELECT
 	Patient_survey_star_rating_ftnt
 FROM survey_reponses_raw
 WHERE hcahps_answer_description LIKE '%star rating%'
+;
 
 DROP TABLE survey_stars;
 CREATE TABLE survey_stars AS
