@@ -131,6 +131,7 @@ SELECT
 FROM survey_responses_raw
 WHERE hcahps_answer_description LIKE '%star rating%'
 GROUP BY HCAHPS_measure_id
+;
 	
 	
 	
