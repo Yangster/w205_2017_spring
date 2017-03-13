@@ -66,23 +66,23 @@ FROM effective_care_raw;
 
 DROP TABLE state_procedures;
 CREATE TABLE state_procedures AS
-SELECT	
-	state,
-	measure_id,
-	AVG(score) AS average_score,
-	PERCENTILE(score, 0.50) AS median_score	
+SELECT
+   state,
+   measure_id,
+   AVG(score) AS average_score,
+   PERCENTILE(score, 0.50) AS median_score   
 FROM(
-	SELECT
-		h.state as state
-		hospital_procedures.provider_id as provider_id,
-		hospital_procedures.measure_id as measure_id,
-		hospital_procedures.score AS score
-	FROM hospital_procedures
-		JOIN
-		hospitals as h
-		ON
-		(hospital_procedures.provider_id=h.provider_id)
-	)
+   SELECT
+      h.state as state,
+      hp.provider_id as provider_id,
+      hp.measure_id as measure_id,
+      hp.score AS score
+   FROM hospital_procedures as hp
+      JOIN
+      hospitals as h
+      ON
+      (hp.provider_id=h.provider_id)
+   )
 WHERE score IS NOT null
 GROUP BY state, measure_id
 ORDER BY state desc
