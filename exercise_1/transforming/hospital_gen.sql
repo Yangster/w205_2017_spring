@@ -74,14 +74,14 @@ SELECT
 FROM(
 	SELECT
 		h.state as state
-		hp.provider_id as provider_id,
-		hp.measure_id as measure_id,
-		hp.score AS score
-	FROM hospital_procedures as hp
+		hospital_procedures.provider_id as provider_id,
+		hospital_procedures.measure_id as measure_id,
+		hospital_procedures.score AS score
+	FROM hospital_procedures
 		JOIN
 		hospitals as h
 		ON
-		(hp.provider_id=h.provider_id)
+		(hospital_procedures.provider_id=h.provider_id)
 	)
 WHERE score IS NOT null
 GROUP BY state, measure_id
