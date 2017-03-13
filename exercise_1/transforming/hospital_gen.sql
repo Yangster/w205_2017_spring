@@ -63,16 +63,9 @@ SELECT
 	CAST(score AS int) AS score
 FROM effective_care_raw;
 
-
-DROP TABLE state_procedures;
-CREATE TABLE state_procedures AS
+DROP TABLE intermed;
+CREATE TABLE intermed as
 SELECT
-   state,
-   measure_id,
-   AVG(score) AS average_score,
-   PERCENTILE(score, 0.50) AS median_score   
-FROM(
-   SELECT
       h.state as state,
       hp.provider_id as provider_id,
       hp.measure_id as measure_id,
@@ -82,10 +75,19 @@ FROM(
       hospitals as h
       ON
       (hp.provider_id=h.provider_id)
-   )
-WHERE hp.score IS NOT NULL
+;
+
+
+DROP TABLE state_procedures;
+CREATE TABLE state_procedures AS
+SELECT
+    state,
+    measure_id,
+    AVG(score) AS average_score,
+    PERCENTILE(score, 0.50) AS median_score   
+FROM intermed
+WHERE score IS NOT NULL
 GROUP BY state, measure_id
-ORDER BY state desc
 ;
 
 
@@ -101,37 +103,6 @@ WHERE hcahps_answer_description LIKE '%star rating%'
 
 DROP TABLE survey_stars;
 CREATE TABLE survey_stars AS
-SELECT
-	HCAHPS_measure_id,
-	FIRST(HCAHPS_question),
-	FIRST(HCAHPS_Answer_Description),
-	FIRST(CAST(
-	concat (substr(measure_start_date, 7, 4),
-		'-',
-		substr(measure_start_date, 1, 2),
-		'-',
-		substr(measure_start_date, 4, 2)
-		)
-
-	AS date) 
-	) AS measure_start_date,
-	FIRST(
-	CAST(
-	concat (substr(measure_end_date, 7, 4),
-		'-',
-		substr(measure_end_date, 1, 2),
-		'-',
-		substr(measure_end_date, 4, 2)
-		)
-	AS date) 
-	)AS measure_end_date
-FROM survey_responses_raw
-WHERE hcahps_answer_description LIKE '%star rating%'
-GROUP BY HCAHPS_measure_id
-	
-	
-DROP TABLE state_survey_stars;
-CREATE TABLE state_survey_stars AS
 SELECT
 	HCAHPS_measure_id,
 	FIRST(HCAHPS_question),
