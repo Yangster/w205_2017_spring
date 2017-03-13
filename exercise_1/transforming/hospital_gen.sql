@@ -70,7 +70,7 @@ SELECT
 	state,
 	measure_id,
 	AVG(score) AS average_score,
-	PERCENTILE(score, 0.50) AS median score	
+	PERCENTILE(score, 0.50) AS median_score	
 FROM(
 	SELECT
 		h.state as state
@@ -94,7 +94,7 @@ CREATE TABLE hospital_survey_stars AS
 SELECT
 	provider_number AS provider_id,
 	HCAHPS_measure_id,
-	CAST(patient_survey_star_rating AS TINYINT) AS stars
+	CAST(patient_survey_star_rating AS TINYINT) AS stars,
 	Patient_survey_star_rating_ftnt
 FROM survey_reponses_raw
 WHERE hcahps_answer_description LIKE '%star rating%'
