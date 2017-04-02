@@ -6,6 +6,12 @@ WHERE stars IS NOT NULL
 GROUP BY provider_id
 ;
 
+DROP TABLE procedure_std;
+CREATE TABLE procedure_std AS
+SELECT measure_id, stddev_samp(score) as measure_std
+FROM hospital_procedures
+WHERE score IS NOT NULL
+GROUP BY measure_id;
 
 DROP TABLE normalized_hosp_scores;
 CREATE TABLE normalized_hosp_scores AS
@@ -33,11 +39,24 @@ WHERE normalized_score IS NOT NULL
 GROUP BY provider_id
 ;
 
+DROP TABLE procedure_variability;
+CREATE TABLE procedure_variability as
+SELECT provider_id, stddev_samp(normalized_score) as hosp_std
+FROM normalized_hosp_scores
+GROUP BY provider_id
+;
 
-DROP TABLE correlation_stars_score
+
+DROP TABLE correlation_stars_score;
 CREATE TABLE correlation_stars_score AS
-SELECT corr(star.avg_stars,score.avg_score) as correlation_avg
+SELECT 
+    corr(star.avg_stars,score.avg_score) as correlation_avg, 
+    corr(star.med_stars,score.avg_score) as correlation_med,
+    corr(star.avg_stars,var.hosp_std) as correlation_avg, 
+    corr(star.med_stars,var.hosp_std) as correlation_med
 FROM avg_med_star_hosp as star
 JOIN best_hosp_ids as score
 ON (STAR.provider_id=score.provider_id)
+JOIN procedure_variability as var
+ON (var.provider_id=star.provider_id)
 ;
