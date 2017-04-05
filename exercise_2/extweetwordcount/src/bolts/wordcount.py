@@ -18,6 +18,9 @@ class WordCounter(Bolt):
         # Write codes to increment the word count in Postgres
         # Use psycopg to interact with Postgres
         
+        # feel like I'm missing something big here
+        
+        
         #first, connect with database Tcount
         try:
         	conn=psycopg2.connect("dbname='tcount' user='postgres' host='localhost'")
