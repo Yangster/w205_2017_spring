@@ -43,12 +43,16 @@ class WordCounter(Bolt):
         if word in wordlist:
         	try:
         		cur.execute("""UPDATE tweetwordcount SET count=count+1 WHERE word =(%s)""",[word])
+        		conn.commit()
         	except:
         		print 'Cannot update count'
         else:
         	try:
         		cur.execute("""INSERT INTO tweetwordcount(word,count) VALUES((%s),1)""",[word])
-        cur.execute("""COMMIT""")
+        		conn.commit()
+        		
+        conn.close()
+        #cur.execute("""COMMIT""")
         	
         # Database name: Tcount 
         # Table name: Tweetwordcount 
