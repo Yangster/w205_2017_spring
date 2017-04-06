@@ -27,14 +27,14 @@ class WordCounter(Bolt):
 			#conn=psycopg2.connect("dbname='tcount' user='postgres' host='localhost'")
         	#connect every time
         except:
-        	print "Cannot connect to Database"
+        	print("Cannot connect to Database")
         cur=conn.cursor()
         
         #find out with word is in database of words
         try:
         	cur.execute("""SELECT word FROM tweetwordcount""")
         except:
-        	print "Cannot query table"
+        	print("Cannot query table")
         wordlist=[i[0] for i in cur.fetchall()]
         
         
@@ -45,13 +45,15 @@ class WordCounter(Bolt):
         		cur.execute("""UPDATE tweetwordcount SET count=count+1 WHERE word =(%s)""",[word])
         		conn.commit()
         	except:
-        		print 'Cannot update count'
+        		print('Cannot update count')
         else:
         	try:
         		cur.execute("""INSERT INTO tweetwordcount(word,count) VALUES((%s),1)""",[word])
         		conn.commit()
-        		
-        conn.close()
+        	except:
+        		print('cannot add new word')
+        #cur.close()		
+        #conn.close()
         #cur.execute("""COMMIT""")
         	
         # Database name: Tcount 
