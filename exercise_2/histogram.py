@@ -13,7 +13,7 @@ assert len(argv)==3, "need two arguements"
 assert (max >= min), "second argument has to be larger than first"
 
 try:
-    conn = psycopg2.connect(database="tcount", user="postgres", host="localhost", port="5432")
+    conn = psycopg2.connect(database="tcount", user="postgres", password="pass", host="localhost", port="5432")
 	#conn=psycopg2.connect("dbname='tcount' user='postgres' host='localhost'")
     #connect every time
 except:

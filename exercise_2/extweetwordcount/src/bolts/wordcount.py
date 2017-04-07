@@ -23,7 +23,7 @@ class WordCounter(Bolt):
         
         #first, connect with database Tcount
         try:
-        	conn = psycopg2.connect(database="tcount", user="postgres", host="localhost", port="5432")
+        	conn = psycopg2.connect(database="tcount", user="postgres",password="pass", host="localhost", port="5432")
 			#conn=psycopg2.connect("dbname='tcount' user='postgres' host='localhost'")
         	#connect every time
         except:
