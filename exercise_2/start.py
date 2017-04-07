@@ -1,6 +1,6 @@
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-import sys.argv
+import sys
 from subprocess import call
 import os
 #starts database
