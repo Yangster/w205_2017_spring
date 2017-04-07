@@ -1,9 +1,0 @@
-Open postgres
-DROP DATABASE Tcount;
-CREATE DATABASE Tcount;
-\c tcount
-drop table tweewordcount;
-CREATE TABLE Tweetwordcount (
-	word varchar (120) PRIMARY KEY,
-	count int NOT NULL
-	)
