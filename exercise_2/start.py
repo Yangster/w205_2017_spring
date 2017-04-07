@@ -21,7 +21,7 @@ try:
 	# CREATE DATABASE can't run inside a transaction
 	conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 	cur = conn.cursor()
-	cur.execute("DROP DATABASE tcount")
+	#cur.execute("DROP DATABASE tcount")
 	cur.execute("CREATE DATABASE tcount")
 	cur.close()
 	conn.close()
