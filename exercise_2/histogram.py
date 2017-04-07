@@ -5,9 +5,12 @@ from pandas import Series
 #argv[0] is hte name of the script
 #argv[1] would be the first argument
 
-
+#print argv[2] >=argv[1]
+#print argv[1] * argv[2]
+min=int(argv[1])
+max=int(argv[2])
 assert len(argv)==3, "need two arguements"
-assert argv[2]>=argv[1]
+assert (max >= min), "second argument has to be larger than first"
 
 try:
     conn = psycopg2.connect(database="tcount", user="postgres", host="localhost", port="5432")
@@ -18,14 +21,13 @@ except:
 cur=conn.cursor()
 
 cur.execute("""SELECT word, count FROM tweetwordcount""")
-records=Series(cur.fetchall())
+records=Series(dict(cur.fetchall()))
 
-min =argv[1]
-max=argv[2]
+#records.sort_values(inplace=True,ascending=True)
 
-records.sort_values(inplace=True,ascending=True)
+display_records=records[records.between(min,max)]
 
-display_records=records[record.between(min,max)]
+#print records
 
-for record in display_records:
-	print record
+for word, count in display_records.iteritems():
+    print word,":",count    
