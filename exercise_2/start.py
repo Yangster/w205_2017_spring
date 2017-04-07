@@ -13,7 +13,7 @@ import os
 	
 #if full==True:
 # Connect to the database
-	conn = psycopg2.connect(database="postgres", user="postgres", password="pass", host="localhost", port="5432")
+conn = psycopg2.connect(database="postgres", user="postgres", password="pass", host="localhost", port="5432")
 
 	#Create the Database IF Database do
 
