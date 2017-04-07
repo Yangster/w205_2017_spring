@@ -10,8 +10,8 @@ import os
 
 arguments=[arg.lower() for arg in sys.argv[1:]] #lower case arguments
 
-assert set(arguments).issubset(set('restart','run','quick')),\
- "Arguments must be one of 'restart', 'quick', or 'restart'
+assert set(arguments).issubset(set(['restart','run','quick'])),\
+ "Arguments must be one of 'restart', 'quick', or 'restart'"
 
 
 if 'restart' in arguments:
@@ -53,7 +53,7 @@ if quick == False: #only do this if user didn't designate 'quick'
 		conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 		cur = conn.cursor()
 		# if user designates restart, then drop database first
-		if restart= True:
+		if restart == True:
 			cur.execute("DROP DATABASE tcount")
 		cur.execute("CREATE DATABASE tcount")
 		cur.close()
@@ -79,7 +79,7 @@ if quick == False: #only do this if user didn't designate 'quick'
 	cur.close()
 	conn.close()
 
-if run = True:
+if run == True:
 	#run streamparse
 	#change to extweetwordcount directory first
 	cwd=os.getcwd()
