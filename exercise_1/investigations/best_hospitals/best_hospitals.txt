@@ -1,0 +1,31 @@
+Hospital Name						State	Hospital Type				Hospital Ownership							Hospital Score
+RAWLINS COUNTY HEALTH CENTER    		KS  Critical Access Hospitals   Voluntary non-profit - Other				1.6746861432907645
+NESS COUNTY HOSPITAL DISTRICT #2		KS	Critical Access Hospitals	Government - Hospital District or Authority	1.6163291180901942
+COMANCHE COUNTY HOSPITAL				KS	Critical Access Hospitals	Government - Local							1.4430178917073642
+MOBRIDGE REGIONAL HOSPITAL - CAH		SD	Critical Access Hospitals	Voluntary non-profit - Private				1.4147789990209012
+PONDERA MEDICAL CENTER					MT	Critical Access Hospitals	Voluntary non-profit - Private				1.4091915748097668
+LEAD - DEADWOOD REGIONAL HOSPITAL - CAH	SD	Critical Access Hospitals	Voluntary non-profit - Private				1.3914273566168873
+WRAY COMMUNITY DISTRICT HOSPITAL		CO	Critical Access Hospitals	Government - Hospital District or Authority	1.268667530400269
+KANE COUNTY HOSPITAL					UT	Critical Access Hospitals	Government - Local							1.2397582186909886
+FAIRFAX COMMUNITY HOSPITAL				OK	Critical Access Hospitals	Proprietary									1.2362700154598585
+PIONEER MEMORIAL HOSPITAL - CAH			SD	Critical Access Hospitals	Voluntary non-profit - Private				1.1321943461773962
+
+
+I determined Normalized score by subtracting the national average score from the hospital 
+score and dividing by standard deviation for the measure. If the measure's description 
+said that 'lower ... is... better', then I took the multiplied the result by negative one.
+If the description said higher was better, then I kept the result the same.
+ Otherwise, the normalized score was NULL
+
+I then averaged the normalized scores across every measure for each hospital to determine 
+the ten best. I used this method as I felt it was the best way to to come up with a single,
+scalar value to quantify every hospital's score. I compared it's score in every measure to 
+the national average and standard deviation and took the average of every score
+
+One of the main weaknesses of this method is that it doesn't include any non-numeric or missing
+values. 
+
+On top the usual perils of combining vector of measures into a single scalar quantity, I
+weighted all of the measures evenly. This may not be the best approach. Perhaps it is more
+important for a hospital to be good at bypass surgery than it is for it to be good at
+treating the common cold.
